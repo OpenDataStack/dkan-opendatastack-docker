@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  dkan_apache_php:
+    image: apache-php-fpm:latest
+    environment:
+      WWW_UID: 501
+      WWW_GID: 501
+    volumes:
+      - ./src/dkan-opendatastack/src/dkan_starter:/var/www/html:nocopy

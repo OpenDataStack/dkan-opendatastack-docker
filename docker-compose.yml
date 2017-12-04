@@ -9,7 +9,7 @@ services:
       MYSQL_USER: dkan
       MYSQL_PASSWORD: dkan
     healthcheck:
-        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        test: "mysql --user=root --password=password -e 'select 1;'"
         timeout: 3s
         retries: 10
 

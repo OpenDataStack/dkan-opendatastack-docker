@@ -77,11 +77,22 @@ class RoboFile extends \Robo\Tasks
         $dockerCompose = [
             'docker-compose',
             '-f docker-compose.yml',
-            '-f docker-compose.dev.yml'
         ];
 
+        // 'Darwin' or 'Linux'
+        if (PHP_OS == 'Darwin') {
+            $this->taskExec('docker-sync')->arg('stop')->run();
+            $this->taskExec('docker-sync')->arg('clean')->run();
+            $this->taskExec('docker-sync')->arg('start')->run();
+            $dockerCompose[] = '-f docker-compose.dev.mac.yml';
+        }
+        // Linux
+        else {
+            $dockerCompose[] = '-f docker-compose.dev.linux.yml';
+        }
+
         $this->taskExec('docker-compose')->arg('stop')->run();
-        $this->taskExec(implode(' ', $dockerCompose))->args('up', '-d')->run();
+        $this->taskExec(implode(' ', $dockerCompose))->args('up')->run();
     }
 
     public function dockerBuild()
@@ -98,16 +109,13 @@ class RoboFile extends \Robo\Tasks
         $localTag = 'dkan-opendatastack';
         $remoteTag = 'opendatastack/' . $localTag;
 
-        $this->taskExec('docker')
-        ->arg('build -t ' . $localTag . ' ' . '.')
+        $this->taskExec('docker build -t ' . $localTag . ' ' . '.')
         ->run();
 
-        $this->taskExec('docker')
-        ->arg('tag ' . $localTag . ' ' . $remoteTag)
+        $this->taskExec('docker tag ' . $localTag . ' ' . $remoteTag)
         ->run();
 
-        $this->taskExec('docker')
-        ->arg('push ' . $remoteTag)
+        $this->taskExec('docker push ' . $remoteTag)
         ->run();
     }
 
