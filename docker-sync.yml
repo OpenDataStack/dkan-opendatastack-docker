@@ -1,0 +1,8 @@
+version: "2"
+
+options:
+  verbose: true
+syncs:
+  dkan-starter-sync:
+    src: './src/dkan-opendatastack/src/dkan_starter'
+    sync_userid: 501

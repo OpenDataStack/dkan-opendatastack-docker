@@ -1,0 +1,14 @@
+{
+    "name": "opendatastack/dkan-opendatastack-docker",
+    "description": "An Apache/PHP-FPM based DKAN Dockerfile",
+    "type": "project",
+    "require-dev": {
+        "consolidation/robo": "^1.1"
+    },
+    "authors": [
+        {
+            "name": "Willie Seabrook",
+            "email": "willie@angrycactus.io"
+        }
+    ]
+}
